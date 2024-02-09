@@ -1,0 +1,16 @@
+.register {
+  &__title {
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    margin-bottom: 10px;
+  }
+
+  &__button {
+  }
+}

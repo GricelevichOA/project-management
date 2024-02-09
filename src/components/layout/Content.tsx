@@ -1,7 +1,7 @@
 interface IBodyProps {
-  children: React.ReactElement
+  children: React.ReactElement;
 }
 
 export function Content({ children }: IBodyProps) {
-  return <main className="Content">Body</main>;
+  return <main className="Content">{children}</main>;
 }
