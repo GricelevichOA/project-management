@@ -13,6 +13,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { setCurrentUserAction } from "../actions";
 import { getUserProfile } from "../api/firestore";
+import { Projects } from "./pages/Projects";
+import { Project } from "./pages/Project";
+import { Profile } from "./pages/Profile";
+import { CreateProject } from "./pages/CreateProject";
+import { UpdateProject } from "./pages/UpdateProject";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +29,7 @@ function App() {
         });
       }
     });
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -36,6 +41,13 @@ function App() {
             <Route path="/" element={<Index />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<Project />} />
+            <Route path="/projects/new" element={<CreateProject />} />
+            <Route path="/projects/:id/edit" element={<UpdateProject />} />
+
+            <Route path="/profile" element={<Profile />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

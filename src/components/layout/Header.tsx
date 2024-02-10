@@ -14,6 +14,11 @@ export function Header() {
           <Link to={"/"} className="link">
             Project management app
           </Link>
+          <Link to={"/profile"}>Profile</Link>
+          <Link to={"/projects"} className="link">
+            Projects
+          </Link>
+          <Link to={"/projects/new"}>New project</Link>
         </div>
         {users.currentUser ? (
           <div className="navbar__auth">
