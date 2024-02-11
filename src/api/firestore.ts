@@ -5,7 +5,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { NewProject, ProjectType } from "../utils/types";
 
@@ -93,6 +95,22 @@ export async function getProjects(): Promise<boolean | Array<ProjectType>> {
   }
 }
 
+export async function getUserProject(userId: string): Promise<any> {
+  try {
+    const projectsRef = collection(db, "projects");
+    const q = query(projectsRef, where("user_id", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const filteredData = querySnapshot.docs.map((doc: any) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return filteredData;
+  } catch (e) {
+    console.error("Error while fetching projects");
+    return false;
+  }
+}
+
 // TODO: избавиться от any
 export async function getProject(
   id: string
@@ -144,27 +162,6 @@ export async function deleteProject(id: string) {
     return false;
   }
 }
-
-// export async function createUserProfile(
-//   id: string,
-//   email: string | null,
-//   username: string | null,
-//   avatar_url: string | null
-// ): Promise<boolean> {
-//   try {
-//     const profilesRef = doc(db, "users", id);
-//     await setDoc(profilesRef, {
-//       avatar_url,
-//       username,
-//       email,
-//     });
-
-//     return true;
-//   } catch (e) {
-//     console.error("Error while adding a user", (e as Error).message);
-//     return false;
-//   }
-// }
 
 // TASKS
 export async function getTasks() {

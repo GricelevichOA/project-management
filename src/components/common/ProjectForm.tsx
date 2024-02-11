@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { createProject } from "../../api/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { Button } from "@mui/material";
 
 type FormProps = {
   title?: string;
@@ -58,7 +59,9 @@ export function ProjectForm({
       </div>
 
       <br />
-      <button onClick={createProjectHandler}>Submit</button>
+      <Button onClick={createProjectHandler} variant="contained">
+        Submit
+      </Button>
     </div>
   );
 }

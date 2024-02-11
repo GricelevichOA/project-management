@@ -6,10 +6,12 @@ import { useDispatch } from "react-redux";
 import { setCurrentUserAction } from "../../actions";
 import { GoogleSignInBtn } from "../common/GoogleSignInBtn";
 import { createUserProfile } from "../../api/firestore";
+import { Button, TextField } from "@mui/material";
 
 export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   // TODO: избавиться от any
   const dispatch = useDispatch();
@@ -26,7 +28,7 @@ export function Register() {
       await createUserProfile(
         userCredentials.user.uid,
         userCredentials.user.email,
-        "New User",
+        username,
         ""
       );
       setEmail("");
@@ -41,26 +43,35 @@ export function Register() {
       <div className="register">
         <h2 className="register__title">Sign up</h2>
         <div className="register__form">
-          <input
+          <TextField
+            variant="outlined"
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            label="Email"
             id="register_email"
             className="register__input input"
             type="email"
-            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input
+          <TextField
+            variant="outlined"
+            label="password"
             id="register_password"
             className="register__input input"
             type="password"
-            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button className="register__button button" onClick={signUp}>
-            Sign up
-          </button>
+          <Button variant="contained" onClick={signUp}>
+            Sign Up
+          </Button>
+
           <GoogleSignInBtn />
         </div>
         <div>
