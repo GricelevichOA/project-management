@@ -24,3 +24,7 @@ export type NewProject = {
   created_at: any;
   updated_at: any;
 };
+
+export type Props = {
+  children: string | JSX.Element | JSX.Element[];
+};

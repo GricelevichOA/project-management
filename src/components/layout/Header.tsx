@@ -55,6 +55,16 @@ export function Header() {
                 Projects
               </Link>
             </Button>
+            <Button sx={{ my: 2, color: "white", display: "block" }}>
+              <Link
+                component={RouterLink}
+                to={"/projects/new"}
+                color={"inherit"}
+                underline="none"
+              >
+                New project
+              </Link>
+            </Button>
           </Box>
 
           {users?.currentUser ? (
@@ -64,7 +74,9 @@ export function Header() {
                   alt={users.currentUser?.username}
                   src={users.currentUser?.avatar_url}
                 />
-                {users.currentUser?.username}
+                <Typography variant="button" display="block" gutterBottom>
+                  {users.currentUser?.username}
+                </Typography>
               </Button>
               <Menu
                 id="user-menu"
