@@ -9,18 +9,26 @@ import { NotFound } from "./pages/NotFound";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { useEffect, useState } from "react";
-import { Auth, User, onAuthStateChanged } from "firebase/auth";
+import { User, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { setCurrentUserAction } from "../actions";
+import {
+  setCurrentUserAction,
+  setProjectsAction,
+  setUserProfilesAction,
+} from "../actions";
 import { getUserProfile } from "../api/firestore";
 import { Projects } from "./pages/Projects";
 import { Project } from "./pages/Project";
 import { Profile } from "./pages/Profile";
 import { CreateProject } from "./pages/CreateProject";
 import { UpdateProject } from "./pages/UpdateProject";
+import { UpdateProfile } from "./pages/UpdateProfile";
 
 function App() {
-  // const currentUser = useSelector((store: any) => store.users.currentUser);
+  const users = useSelector((store: any) => store.users);
+  const projects = useSelector((store: any) => store.projects);
+  const tasks = useSelector((store: any) => store.tasks);
+
   const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
@@ -33,6 +41,11 @@ function App() {
         });
       }
     });
+    const load = async () => {
+      await setUserProfilesAction(dispatch);
+      await setProjectsAction(dispatch);
+    };
+    load();
     // eslint-disable-next-line
   }, []);
 
@@ -71,6 +84,10 @@ function App() {
             />
 
             <Route path="/profile" element={checkAuth(<Profile />)} />
+            <Route
+              path="/profile/edit"
+              element={checkAuth(<UpdateProfile />)}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

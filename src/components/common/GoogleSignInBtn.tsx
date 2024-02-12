@@ -1,19 +1,21 @@
 import { getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../config/firebase";
-import { createUserProfile } from "../../api/firestore";
+import { setUserProfile } from "../../api/firestore";
 import { Button } from "@mui/material";
+import { UserProfile } from "../../utils/types";
 
 export function GoogleSignInBtn() {
   async function signInWithGoogle(): Promise<void> {
     try {
       const userCredentials = await signInWithPopup(auth, googleProvider);
       if (getAdditionalUserInfo(userCredentials)?.isNewUser) {
-        await createUserProfile(
-          userCredentials.user.uid,
-          userCredentials.user.email,
-          userCredentials.user.displayName,
-          userCredentials.user.photoURL
-        );
+        const newUserProfile = {
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+          username: userCredentials.user.displayName,
+          avatar_url: userCredentials.user.photoURL,
+        } as UserProfile;
+        await setUserProfile(newUserProfile);
       }
     } catch (e) {
       console.error(

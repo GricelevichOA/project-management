@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProjectType, ProjectsState } from "../utils/types";
+import { ProjectsState } from "../utils/types";
 
 const initialState = {
   items: [],
   currentProject: null,
+  projectTasks: [],
+  projectCreator: null,
   isLoading: false,
   error: null,
 } as ProjectsState;
@@ -14,6 +16,9 @@ export const projectsSlice = createSlice({
   reducers: {
     setProjects: (state, action) => {
       state.items = action.payload;
+    },
+    clearProjects: (state) => {
+      state.items = [];
     },
     isLoadingStart: (state) => {
       state.isLoading = true;
@@ -29,6 +34,18 @@ export const projectsSlice = createSlice({
     },
     clearCurrentProject: (state) => {
       state.currentProject = null;
+    },
+    setProjectTasks: (state, action) => {
+      state.projectTasks = action.payload;
+    },
+    clearProjectTasks: (state) => {
+      state.projectTasks = [];
+    },
+    setProjectCreator: (state, action) => {
+      state.projectCreator = action.payload;
+    },
+    clearProjectCreator: (state) => {
+      state.projectCreator = null;
     },
   },
 });

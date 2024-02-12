@@ -1,17 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UserProfile, UsersState } from "../utils/types";
 
-type UserProfile = {
-  uid: string;
-  email: string;
-  username: string;
-  avatar_url: string;
-};
-
-type UsersState = {
-  currentUser: UserProfile | null;
-};
-
-const initialState = { currentUser: null } as UsersState;
+const initialState = {
+  currentUser: null,
+  allUsers: [],
+  isLoading: false,
+} as UsersState;
 
 export const usersSlice = createSlice({
   name: "users",
@@ -22,6 +16,15 @@ export const usersSlice = createSlice({
     },
     clearUserData: (state) => {
       state.currentUser = null;
+    },
+    setUsers: (state, action) => {
+      state.allUsers = action.payload;
+    },
+    isLoadingStart: (state) => {
+      state.isLoading = true;
+    },
+    isLoadingEnd: (state) => {
+      state.isLoading = false;
     },
   },
 });

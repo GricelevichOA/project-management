@@ -9,23 +9,20 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import { NewProject, ProjectType } from "../utils/types";
+import { NewProject, ProjectType, Task, UserProfile } from "../utils/types";
 
 // поправить типы
 // ДОБАВИТЬ ВОЗВРАЩАЕМЫЕ ТИПЫ ДЛЯ ФУНКЦИЙ
 // USERS
-export async function createUserProfile(
-  id: string,
-  email: string | null,
-  username: string | null,
-  avatar_url: string | null
+export async function setUserProfile(
+  userProfile: UserProfile
 ): Promise<boolean> {
   try {
-    const profilesRef = doc(db, "users", id);
+    const profilesRef = doc(db, "users", userProfile.id);
     await setDoc(profilesRef, {
-      avatar_url,
-      username,
-      email,
+      avatar_url: userProfile.avatar_url,
+      username: userProfile.username,
+      email: userProfile.email,
     });
 
     return true;
@@ -41,7 +38,7 @@ export async function getUserProfile(uid: string) {
     const userSnap = await getDoc(profileRef);
 
     if (userSnap.exists()) {
-      const userData = { uid: userSnap.id, ...userSnap.data() };
+      const userData = { id: userSnap.id, ...userSnap.data() };
       return userData;
     }
   } catch (e) {
@@ -49,6 +46,9 @@ export async function getUserProfile(uid: string) {
     return false;
   }
 }
+
+// TODO:
+export async function deleteUserProfile(uid: string) {}
 
 export async function getUserProfiles() {
   try {
@@ -59,7 +59,6 @@ export async function getUserProfiles() {
       ...doc.data(),
       id: doc.id,
     }));
-    console.log("filtered profiles", filteredProfiles);
     return filteredProfiles;
   } catch (e) {
     console.error("Error while fetching users: ", (e as Error).message);
@@ -68,6 +67,7 @@ export async function getUserProfiles() {
 }
 
 // PROJECTS
+// TODO: отформатировать
 export async function getProjects(): Promise<boolean | Array<ProjectType>> {
   try {
     const projectsRef = collection(db, "projects");
@@ -95,7 +95,7 @@ export async function getProjects(): Promise<boolean | Array<ProjectType>> {
   }
 }
 
-export async function getUserProject(userId: string): Promise<any> {
+export async function getUserProjects(userId: string): Promise<any> {
   try {
     const projectsRef = collection(db, "projects");
     const q = query(projectsRef, where("user_id", "==", userId));
@@ -111,7 +111,7 @@ export async function getUserProject(userId: string): Promise<any> {
   }
 }
 
-// TODO: избавиться от any
+// TODO: избавиться от any и отформатировать
 export async function getProject(
   id: string
 ): Promise<ProjectType | boolean | any> {
@@ -141,11 +141,9 @@ export async function createProject(
   project: any
 ): Promise<boolean | undefined> {
   try {
-    if (project.id) {
-      const projectRef = doc(db, "projects", project.id);
-      await setDoc(projectRef, project);
-      return true;
-    }
+    const projectRef = doc(db, "projects", project.id);
+    await setDoc(projectRef, project);
+    return true;
   } catch (e) {
     console.error("error creating project", (e as Error).message);
     return false;
@@ -181,8 +179,70 @@ export async function getTasks() {
 
 export async function getProjectTasks(projectId: string) {
   try {
+    const tasksRef = collection(db, "tasks");
+    const q = query(tasksRef, where("project_id", "==", projectId));
+    const querySnapshot = await getDocs(q);
+    const filteredData = querySnapshot.docs.map((doc: any) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return filteredData;
   } catch (e) {
     console.error("Error while fetching tasks: ", (e as Error).message);
     return false;
   }
 }
+
+export async function getTaskAssignee(taskId: string) {
+  try {
+    const userRef = doc(db, "users", taskId);
+    const querySnapshot = await getDoc(userRef);
+
+    if (querySnapshot.exists()) {
+      const userData = {
+        id: querySnapshot.id,
+        ...querySnapshot.data(),
+      };
+
+      return userData;
+    }
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
+export async function createTask(task: Task) {
+  try {
+    const taskRef = doc(db, "tasks", task.id);
+    await setDoc(taskRef, task);
+    return true;
+  } catch (e) {
+    console.error(e);
+
+    return false;
+  }
+}
+
+// TODO:
+export async function updateTask(task: Task) {}
+
+// TODO:
+export async function updateTaskStatus(task: Task, newStatus: string) {}
+
+export async function deleteTask(taskId: string) {}
+
+// export async function createProject(
+//   project: any
+// ): Promise<boolean | undefined> {
+//   try {
+//     if (project.id) {
+//       const projectRef = doc(db, "projects", project.id);
+//       await setDoc(projectRef, project);
+//       return true;
+//     }
+//   } catch (e) {
+//     console.error("error creating project", (e as Error).message);
+//     return false;
+//   }
+// }

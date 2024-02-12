@@ -5,13 +5,26 @@ export type ProjectType = {
   description: string;
   user_id: string;
   status: string;
-  created_at: any;
-  updated_at: any;
+  created_at: number;
+  updated_at: number;
+};
+
+export type Task = {
+  id: string;
+  title: string;
+  description: string;
+  project_id: string;
+  date_started: number;
+  due_date: number;
+  assignee: string;
+  status: string;
 };
 
 export type ProjectsState = {
   items: Array<ProjectType>;
   currentProject: ProjectType | null;
+  projectTasks: Array<Task>;
+  projectCreator: UserProfile | null;
   isLoading: boolean;
   error: string | null;
 };
@@ -27,4 +40,25 @@ export type NewProject = {
 
 export type Props = {
   children: string | JSX.Element | JSX.Element[];
+};
+
+export type TaskCardProps = {
+  task: Task;
+};
+
+export type UserProfile = {
+  id: string;
+  avatar_url: string;
+  email: string;
+  username: string;
+};
+
+export type UsersState = {
+  currentUser: UserProfile | null;
+  allUsers: UserProfile[];
+  isLoading: boolean;
+};
+
+export type ProjectCardProps = {
+  project: ProjectType;
 };

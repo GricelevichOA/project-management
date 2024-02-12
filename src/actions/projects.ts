@@ -1,7 +1,12 @@
 // TODO: избавиться от any
 
 import { Dispatch } from "react";
-import { getProject, getProjects } from "../api/firestore";
+import {
+  getProject,
+  getProjectTasks,
+  getProjects,
+  getUserProfile,
+} from "../api/firestore";
 import { actions } from "../store";
 import { UnknownAction } from "redux";
 
@@ -24,4 +29,26 @@ export async function setCurrentProjectAction(
 
 export function clearCurrentProjectAction(dispatch: any): void {
   dispatch(actions.projects.clearCurrentProject());
+}
+
+export async function setProjectTasksAction(dispatch: any, projectId: string) {
+  dispatch(actions.projects.isLoadingStart());
+  const tasks = await getProjectTasks(projectId);
+  dispatch(actions.projects.setProjectTasks(tasks));
+  dispatch(actions.projects.isLoadingEnd());
+}
+
+export function clearProjectTasksAction(dispatch: any): void {
+  dispatch(actions.projects.clearProjectTasks());
+}
+
+export async function setProjectCreatorAction(dispatch: any, userId: string) {
+  dispatch(actions.projects.isLoadingStart());
+  const user = await getUserProfile(userId);
+  dispatch(actions.projects.setProjectCreator(user));
+  dispatch(actions.projects.isLoadingEnd());
+}
+
+export function clearProjectCreatorAction(dispatch: any) {
+  dispatch(actions.projects.clearProjectCreator());
 }

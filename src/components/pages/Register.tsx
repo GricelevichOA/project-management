@@ -5,8 +5,9 @@ import { auth } from "../../config/firebase";
 import { useDispatch } from "react-redux";
 import { setCurrentUserAction } from "../../actions";
 import { GoogleSignInBtn } from "../common/GoogleSignInBtn";
-import { createUserProfile } from "../../api/firestore";
+import { setUserProfile } from "../../api/firestore";
 import { Button, TextField } from "@mui/material";
+import { UserProfile } from "../../utils/types";
 
 export function Register() {
   const [email, setEmail] = useState("");
@@ -25,12 +26,13 @@ export function Register() {
       );
       setCurrentUserAction(dispatch, auth?.currentUser);
       // TODO: СДЕЛАТЬ ДЕФОЛТНУЮ КАРТИНКУ ДЛЯ АВАТАРА
-      await createUserProfile(
-        userCredentials.user.uid,
-        userCredentials.user.email,
-        username,
-        ""
-      );
+      const newUserProfile = {
+        id: userCredentials.user.uid,
+        username: "new user",
+        email: userCredentials.user.email,
+        avatar_url: "",
+      } as UserProfile;
+      await setUserProfile(newUserProfile);
       setEmail("");
       setPassword("");
     } catch (e) {

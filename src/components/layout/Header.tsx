@@ -95,6 +95,17 @@ export function Header() {
                     Profile
                   </Link>
                 </MenuItem>
+                <MenuItem>
+                  <Link
+                    component={RouterLink}
+                    to={"/profile/edit"}
+                    color={"inherit"}
+                    underline="none"
+                    onClick={handleClose}
+                  >
+                    Edit profile
+                  </Link>
+                </MenuItem>
                 <MenuItem
                   onClick={() => {
                     logOut(dispatch);
