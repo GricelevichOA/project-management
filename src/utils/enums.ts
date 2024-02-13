@@ -1,14 +1,12 @@
 export enum ProjectStatus {
-  created = "created",
-  inProgress = "inProgress",
-  finished = "finished",
-  paused = "paused",
+  active = "active",
+  archived = "archived",
 }
 
 export enum TaskStatus {
-  created = "created",
-  inProgress = "inProgress",
+  created = "just created",
+  inProgress = "in progress",
   finished = "finished",
-  paused = "paused",
+  cancelled = "cancelled",
   overdue = "overdue",
 }

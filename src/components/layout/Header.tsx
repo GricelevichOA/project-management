@@ -41,30 +41,40 @@ export function Header() {
             color={"inherit"}
             underline="none"
           >
-            Project management
+            <Typography variant="button">Project management</Typography>
           </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button sx={{ my: 2, color: "white", display: "block" }}>
-              <Link
-                component={RouterLink}
-                to={"/projects"}
-                color={"inherit"}
-                underline="none"
-              >
+            <Link
+              component={RouterLink}
+              to={"/projects"}
+              color={"inherit"}
+              underline="none"
+            >
+              <Button sx={{ my: 2, color: "white", display: "block" }}>
                 Projects
-              </Link>
-            </Button>
-            <Button sx={{ my: 2, color: "white", display: "block" }}>
-              <Link
-                component={RouterLink}
-                to={"/projects/new"}
-                color={"inherit"}
-                underline="none"
-              >
+              </Button>
+            </Link>
+            <Link
+              component={RouterLink}
+              to={"/profile"}
+              color={"inherit"}
+              underline="none"
+            >
+              <Button sx={{ my: 2, color: "white", display: "block" }}>
+                My Profile
+              </Button>
+            </Link>
+            <Link
+              component={RouterLink}
+              to={"/projects/new"}
+              color={"inherit"}
+              underline="none"
+            >
+              <Button sx={{ my: 2, color: "white", display: "block" }}>
                 New project
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Box>
 
           {users?.currentUser ? (
@@ -89,17 +99,6 @@ export function Header() {
                 anchorEl={anchorEl}
                 onClose={handleClose}
               >
-                <MenuItem>
-                  <Link
-                    component={RouterLink}
-                    to={"/profile"}
-                    color={"inherit"}
-                    underline="none"
-                    onClick={handleClose}
-                  >
-                    Profile
-                  </Link>
-                </MenuItem>
                 <MenuItem>
                   <Link
                     component={RouterLink}

@@ -1,6 +1,5 @@
 // TODO: избавиться от any
 
-import { Dispatch } from "react";
 import {
   getProject,
   getProjectTasks,
@@ -8,7 +7,7 @@ import {
   getUserProfile,
 } from "../api/firestore";
 import { actions } from "../store";
-import { UnknownAction } from "redux";
+import { CurrentProject } from "../utils/types";
 
 export async function setProjectsAction(dispatch: any): Promise<void> {
   dispatch(actions.projects.isLoadingStart());
@@ -23,33 +22,19 @@ export async function setCurrentProjectAction(
 ): Promise<void> {
   dispatch(actions.projects.isLoadingStart());
   const project = await getProject(id);
-  dispatch(actions.projects.setCurrentProject(project));
+  const tasks = await getProjectTasks(id);
+  const projectOwner = await getUserProfile(project.user_id);
+
+  const currentProject = {
+    projectData: project,
+    projectOwner: projectOwner,
+    projectTasks: tasks,
+  } as CurrentProject;
+
+  dispatch(actions.projects.setCurrentProject(currentProject));
   dispatch(actions.projects.isLoadingEnd());
 }
 
 export function clearCurrentProjectAction(dispatch: any): void {
   dispatch(actions.projects.clearCurrentProject());
-}
-
-export async function setProjectTasksAction(dispatch: any, projectId: string) {
-  dispatch(actions.projects.isLoadingStart());
-  const tasks = await getProjectTasks(projectId);
-  dispatch(actions.projects.setProjectTasks(tasks));
-  dispatch(actions.projects.isLoadingEnd());
-}
-
-export function clearProjectTasksAction(dispatch: any): void {
-  dispatch(actions.projects.clearProjectTasks());
-}
-
-export async function setProjectCreatorAction(dispatch: any, userId: string) {
-  dispatch(actions.projects.isLoadingStart());
-  const user = await getUserProfile(userId);
-  
-  dispatch(actions.projects.setProjectCreator(user));
-  dispatch(actions.projects.isLoadingEnd());
-}
-
-export function clearProjectCreatorAction(dispatch: any) {
-  dispatch(actions.projects.clearProjectCreator());
 }

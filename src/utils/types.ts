@@ -31,11 +31,15 @@ export type NewTaskFormProps = {
 
 export type ProjectsState = {
   items: Array<ProjectType>;
-  currentProject: ProjectType | null;
-  projectTasks: Array<Task>;
-  projectCreator: UserProfile | null;
+  currentProject: CurrentProject | null;
   isLoading: boolean;
   error: string | null;
+};
+
+export type CurrentProject = {
+  projectData: ProjectType | null;
+  projectTasks: Task[] | null;
+  projectOwner: UserProfile | null;
 };
 
 export type NewProject = {
@@ -70,4 +74,9 @@ export type UsersState = {
 
 export type ProjectCardProps = {
   project: ProjectType;
+};
+
+export type TaskBlockProps = {
+  title: string;
+  tasks: Task[];
 };
