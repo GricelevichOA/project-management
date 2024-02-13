@@ -43,7 +43,11 @@ export function TaskCard({ task }: TaskCardProps) {
             {task.title}
           </Typography>
 
-          <Typography variant="body1">{task.description}</Typography>
+          <Typography sx={{ wordWrap: "break-word" }} variant="body1">
+            {task.description}
+          </Typography>
+          <Typography>Created: {new Date(task.date_started).toString()}</Typography>
+          <Typography>Due date: {new Date(task.due_date).toString()}</Typography>
 
           <Box
             sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}

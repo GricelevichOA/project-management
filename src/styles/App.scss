@@ -4,3 +4,15 @@
 @import "@fontsource/roboto/700.css";
 
 @import "Footer.scss";
+
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

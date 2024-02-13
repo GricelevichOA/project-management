@@ -45,7 +45,7 @@ export function Project() {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [assignee, setAssignee] = useState<string | number>("");
-  const [dueDate, setDueDate] = useState<number>(Date.now());
+  const [dueDate, setDueDate] = useState<number>();
 
   function handleOpenTaskForm() {
     setIsCreatingTask(true);
@@ -79,10 +79,12 @@ export function Project() {
       description,
       assignee,
       due_date: dueDate,
-      project_id: projects.currentProject.id,
+      project_id: projects.currentProject?.projectData?.id,
       date_started: Date.now(),
     } as Task;
+
     await createTask(newTask);
+    await setCurrentProjectAction(dispatch, projectId || "");
     setIsCreatingTask(false);
     setAssignee("");
     setTitle("");
@@ -95,6 +97,7 @@ export function Project() {
       await setCurrentProjectAction(dispatch, projectId || "");
     };
     load();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -288,6 +291,7 @@ export function Project() {
                       sx={{ width: "100%" }}
                       label="Due date"
                       ampm={false}
+                      onChange={handleDueDateChange}
                     />
                   </LocalizationProvider>
                 </Box>

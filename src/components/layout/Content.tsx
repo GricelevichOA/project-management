@@ -5,5 +5,5 @@ interface IBodyProps {
 }
 
 export function Content({ children }: IBodyProps) {
-  return <Container component={"main"}>{children}</Container>;
+  return <Container component={"main"} sx={{flex: "1 1"}}>{children}</Container>;
 }
