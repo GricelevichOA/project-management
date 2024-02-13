@@ -24,6 +24,7 @@ export function TaskCard({ task }: TaskCardProps) {
       (user: UserProfile) => user.id === task.assignee
     );
     setAssignee(a);
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -46,8 +47,12 @@ export function TaskCard({ task }: TaskCardProps) {
           <Typography sx={{ wordWrap: "break-word" }} variant="body1">
             {task.description}
           </Typography>
-          <Typography>Created: {new Date(task.date_started).toString()}</Typography>
-          <Typography>Due date: {new Date(task.due_date).toString()}</Typography>
+          <Typography>
+            Created: {new Date(task.date_started).toString()}
+          </Typography>
+          <Typography>
+            Due date: {new Date(task.due_date).toString()}
+          </Typography>
 
           <Box
             sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}

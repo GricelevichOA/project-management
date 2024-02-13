@@ -1,8 +1,9 @@
 import { getAdditionalUserInfo, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../config/firebase";
 import { setUserProfile } from "../../api/firestore";
-import { Button } from "@mui/material";
+import { Button, Icon } from "@mui/material";
 import { UserProfile } from "../../utils/types";
+import GoogleIcon from "@mui/icons-material/Google";
 
 export function GoogleSignInBtn() {
   async function signInWithGoogle(): Promise<void> {
@@ -26,8 +27,12 @@ export function GoogleSignInBtn() {
   }
 
   return (
-    <Button variant="outlined" onClick={signInWithGoogle}>
-      Sign up with Google
+    <Button
+      variant="outlined"
+      onClick={signInWithGoogle}
+      sx={{ width: "100%" }}
+    >
+      <GoogleIcon sx={{ mr: 1 }} /> Sign up with Google
     </Button>
   );
 }

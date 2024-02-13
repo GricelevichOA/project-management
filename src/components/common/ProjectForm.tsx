@@ -29,7 +29,7 @@ export function ProjectForm({
       id: projectId || uuidv4(),
       title: formTitle,
       description: formDescription,
-      user_id: users.currentUser.uid,
+      user_id: users.currentUser.id,
       status: "new",
       created_at: Date.now(),
       updated_at: "",

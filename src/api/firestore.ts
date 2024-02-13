@@ -9,7 +9,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import { NewProject, ProjectType, Task, UserProfile } from "../utils/types";
+import { ProjectType, Task, UserProfile } from "../utils/types";
 
 // поправить типы
 // ДОБАВИТЬ ВОЗВРАЩАЕМЫЕ ТИПЫ ДЛЯ ФУНКЦИЙ
@@ -250,18 +250,3 @@ export async function updateTask(task: Task) {}
 export async function updateTaskStatus(task: Task, newStatus: string) {}
 
 export async function deleteTask(taskId: string) {}
-
-// export async function createProject(
-//   project: any
-// ): Promise<boolean | undefined> {
-//   try {
-//     if (project.id) {
-//       const projectRef = doc(db, "projects", project.id);
-//       await setDoc(projectRef, project);
-//       return true;
-//     }
-//   } catch (e) {
-//     console.error("error creating project", (e as Error).message);
-//     return false;
-//   }
-// }

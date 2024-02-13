@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProjectType, ProjectsState, Task } from "../utils/types";
+import { ProjectsState } from "../utils/types";
 
 const initialState = {
   items: [],

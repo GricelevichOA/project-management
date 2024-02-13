@@ -3,11 +3,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import { useDispatch } from "react-redux";
-import { setCurrentUserAction } from "../../actions";
+import { setCurrentUserAction, setUserProfilesAction } from "../../actions";
 import { GoogleSignInBtn } from "../common/GoogleSignInBtn";
 import { setUserProfile } from "../../api/firestore";
-import { Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { UserProfile } from "../../utils/types";
+import LockIcon from "@mui/icons-material/Lock";
 
 export function Register() {
   const [email, setEmail] = useState("");
@@ -30,9 +38,10 @@ export function Register() {
         id: userCredentials.user.uid,
         username: username,
         email: userCredentials.user.email,
-        avatar_url: "",
+        avatar_url: `https://i.pravatar.cc/150?u=${email}`,
       } as UserProfile;
       await setUserProfile(newUserProfile);
+      await setUserProfilesAction(dispatch);
       setEmail("");
       setPassword("");
     } catch (e) {
@@ -42,44 +51,75 @@ export function Register() {
 
   return (
     <>
-      <div className="register">
-        <h2 className="register__title">Sign up</h2>
-        <div className="register__form">
-          <TextField
-            variant="outlined"
-            label="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            label="Email"
-            id="register_email"
-            className="register__input input"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            label="password"
-            id="register_password"
-            className="register__input input"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <Button variant="contained" onClick={signUp}>
-            Sign Up
-          </Button>
-
-          <GoogleSignInBtn />
-        </div>
-        <div>
-          Already have an account? <Link to="/login">Sign in</Link>
-        </div>
-      </div>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center ",
+          alignItems: "center",
+          flex: "1 1",
+        }}
+      >
+        <Card
+          sx={{ maxWidth: 400, alignSelf: "center", justifySelf: "center" }}
+        >
+          <CardContent>
+            <Typography variant="h3" sx={{ textAlign: "center", mb: 2 }}>
+              Sign up
+            </Typography>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: "100%" }}
+                variant="outlined"
+                label="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: "100%" }}
+                variant="outlined"
+                label="Email"
+                id="register_email"
+                className="register__input input"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: "100%" }}
+                variant="outlined"
+                label="Password"
+                id="register_password"
+                className="register__input input"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <Button
+                sx={{ width: "100%" }}
+                variant="contained"
+                onClick={signUp}
+              >
+                Sign Up
+              </Button>
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <GoogleSignInBtn />
+            </Box>
+            <Box>
+              <Typography variant="caption">
+                Already have an account <Link to="/login">Sign in</Link>
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
     </>
   );
 }

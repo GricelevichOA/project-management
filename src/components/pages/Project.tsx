@@ -2,10 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Task, UserProfile } from "../../utils/types";
 import { useEffect, useState } from "react";
-import {
-  clearCurrentProjectAction,
-  setCurrentProjectAction,
-} from "../../actions";
+import { setCurrentProjectAction } from "../../actions";
 import {
   Avatar,
   Box,
@@ -45,7 +42,7 @@ export function Project() {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [assignee, setAssignee] = useState<string | number>("");
-  const [dueDate, setDueDate] = useState<number>();
+  const [dueDate, setDueDate] = useState<number>(Date.now());
 
   function handleOpenTaskForm() {
     setIsCreatingTask(true);
