@@ -6,7 +6,7 @@ export function setCurrentUserAction(dispatch: any, user: any): void {
   dispatch(actions.users.setCurrentUser(user));
 }
 
-export async function clearUserDataAction(dispatch: any): Promise<void> {
+export function clearUserDataAction(dispatch: any): void {
   dispatch(actions.users.clearUserData());
 }
 

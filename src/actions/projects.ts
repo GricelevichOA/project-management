@@ -45,6 +45,7 @@ export function clearProjectTasksAction(dispatch: any): void {
 export async function setProjectCreatorAction(dispatch: any, userId: string) {
   dispatch(actions.projects.isLoadingStart());
   const user = await getUserProfile(userId);
+  
   dispatch(actions.projects.setProjectCreator(user));
   dispatch(actions.projects.isLoadingEnd());
 }

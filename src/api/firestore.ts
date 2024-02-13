@@ -48,7 +48,27 @@ export async function getUserProfile(uid: string) {
 }
 
 // TODO:
-export async function deleteUserProfile(uid: string) {}
+export async function deleteUserProfile(uid: string) {
+  try {
+    const userRef = doc(db, "users", uid);
+    await deleteDoc(userRef);
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
+// export async function deleteProject(id: string) {
+//   try {
+//     const docRef = doc(db, "projects", id);
+//     await deleteDoc(docRef);
+//     return true;
+//   } catch (e) {
+//     console.error("error while deleting project", (e as Error).message);
+//     return false;
+//   }
+// }
 
 export async function getUserProfiles() {
   try {
@@ -169,7 +189,6 @@ export async function getTasks() {
       ...doc.data(),
       id: doc.id,
     }));
-    console.log("filtered tasks", filteredTasks);
     return filteredTasks;
   } catch (e) {
     console.error("Error while fetching tasks: ", (e as Error).message);

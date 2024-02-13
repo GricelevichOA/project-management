@@ -28,7 +28,7 @@ export function Register() {
       // TODO: СДЕЛАТЬ ДЕФОЛТНУЮ КАРТИНКУ ДЛЯ АВАТАРА
       const newUserProfile = {
         id: userCredentials.user.uid,
-        username: "new user",
+        username: username,
         email: userCredentials.user.email,
         avatar_url: "",
       } as UserProfile;

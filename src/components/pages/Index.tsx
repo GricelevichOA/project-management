@@ -1,5 +1,12 @@
+import { Box, Typography } from "@mui/material";
+
 export function Index() {
-  return <div className="index">
-    <h1>Welcome to project management app</h1>
-  </div>
+  return (
+    <Box sx={{}}>
+      <Typography variant="h1">
+        Welcome to project management app
+      </Typography>
+      <Typography variant="h2">Made by me for you</Typography>
+    </Box>
+  );
 }

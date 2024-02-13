@@ -1,5 +1,8 @@
 import "../styles/App.scss";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  useDispatch,
+  // useSelector
+} from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Header } from "./layout/Header";
 import { Footer } from "./layout/Footer";
@@ -14,6 +17,7 @@ import { auth } from "../config/firebase";
 import {
   setCurrentUserAction,
   setProjectsAction,
+  setTasksAction,
   setUserProfilesAction,
 } from "../actions";
 import { getUserProfile } from "../api/firestore";
@@ -23,11 +27,12 @@ import { Profile } from "./pages/Profile";
 import { CreateProject } from "./pages/CreateProject";
 import { UpdateProject } from "./pages/UpdateProject";
 import { UpdateProfile } from "./pages/UpdateProfile";
+import { Auth } from "./pages/Auth";
 
 function App() {
-  const users = useSelector((store: any) => store.users);
-  const projects = useSelector((store: any) => store.projects);
-  const tasks = useSelector((store: any) => store.tasks);
+  // const users = useSelector((store: any) => store.users);
+  // const projects = useSelector((store: any) => store.projects);
+  // const tasks = useSelector((store: any) => store.tasks);
 
   const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -44,6 +49,7 @@ function App() {
     const load = async () => {
       await setUserProfilesAction(dispatch);
       await setProjectsAction(dispatch);
+      await setTasksAction(dispatch);
     };
     load();
     // eslint-disable-next-line
@@ -63,7 +69,11 @@ function App() {
         <Header />
         <Content>
           <Routes>
-            <Route path="/" element={checkAuth(<Index />)} />
+            <Route path="/" element={<Index />} />
+            <Route
+              path="/auth"
+              element={!currentUser ? <Auth /> : <Navigate to="/" />}
+            />
             <Route
               path="/register"
               element={!currentUser ? <Register /> : <Navigate to="/" />}

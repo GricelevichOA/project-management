@@ -20,6 +20,15 @@ export type Task = {
   status: string;
 };
 
+export type TasksState = {
+  isLoading: boolean;
+  items: Task[];
+};
+
+export type NewTaskFormProps = {
+  projectId: string;
+};
+
 export type ProjectsState = {
   items: Array<ProjectType>;
   currentProject: ProjectType | null;

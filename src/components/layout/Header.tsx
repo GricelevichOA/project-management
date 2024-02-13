@@ -70,13 +70,18 @@ export function Header() {
           {users?.currentUser ? (
             <>
               <Button color="inherit" id="user-button" onClick={handleClick}>
-                <Avatar
-                  alt={users.currentUser?.username}
-                  src={users.currentUser?.avatar_url}
-                />
-                <Typography variant="button" display="block" gutterBottom>
-                  {users.currentUser?.username}
-                </Typography>
+                <Box sx={{ mr: 2 }}>
+                  <Avatar
+                    alt={users.currentUser?.username}
+                    src={users.currentUser?.avatar_url}
+                    sx={{ mr: "2" }}
+                  />
+                </Box>
+                <Box>
+                  <Typography variant="button" display="block" gutterBottom>
+                    {users.currentUser?.username}
+                  </Typography>
+                </Box>
               </Button>
               <Menu
                 id="user-menu"

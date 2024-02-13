@@ -1,15 +1,21 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserProfile, setUserProfile } from "../../api/firestore";
+import {
+  deleteUserProfile,
+  getUserProfile,
+  setUserProfile,
+} from "../../api/firestore";
 import { useNavigate } from "react-router-dom";
-import { getUserProfileAction, setCurrentUserAction } from "../../actions";
+import { clearUserDataAction, setCurrentUserAction } from "../../actions";
+import { auth } from "../../config/firebase";
+import { deleteUser } from "firebase/auth";
 
 export function UpdateProfile() {
   const users = useSelector((state: any) => state.users);
-  const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [avatarUrl, setAvatarUrl] = useState<string>(
     users.currentUser?.avatar_url
@@ -27,6 +33,18 @@ export function UpdateProfile() {
     const user = await getUserProfile(users.currentUser?.id);
     setCurrentUserAction(dispatch, user);
     navigate("/profile");
+  }
+
+  async function deleteProfileHandler() {
+    if (window.confirm("Вы точно хотите удалить аккаунт?")) {
+      await deleteUserProfile(users.currentUser?.id);
+      clearUserDataAction(dispatch);
+      const user = auth.currentUser;
+      if (user) {
+        await deleteUser(user);
+      }
+      navigate("/register");
+    }
   }
 
   return (
@@ -57,6 +75,10 @@ export function UpdateProfile() {
       />
       <Button variant="contained" onClick={editProfileHandler}>
         Save profile
+      </Button>
+
+      <Button color="error" variant="contained" onClick={deleteProfileHandler}>
+        Delete profile
       </Button>
     </Box>
   );

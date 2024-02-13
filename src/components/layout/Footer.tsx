@@ -1,3 +1,9 @@
+import { Typography, Box } from "@mui/material";
+
 export function Footer() {
-  return <footer className="Footer">2023 (c) No Rights Reversed</footer>;
+  return (
+    <Box component="footer" className="Footer">
+      <Typography>2024 (c) No Rights Reversed</Typography>
+    </Box>
+  );
 }
