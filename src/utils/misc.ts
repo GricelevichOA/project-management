@@ -21,3 +21,8 @@ export function setStatusColor(status: string) {
 export function filterTasksByStatus(status: string, tasks: Task[]): Task[] {
   return tasks.filter((task: Task) => task.status === status);
 }
+
+export function formatDate(date: number) {
+  const d = new Date(date);
+  return `${d.getUTCDate()}.${d.getUTCMonth()}.${d.getFullYear()} at ${d.getHours()}:${d.getMinutes()}`;
+}

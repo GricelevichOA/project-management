@@ -6,7 +6,7 @@ export function TasksBlock({ tasks, title }: TaskBlockProps) {
   return tasks.length > 0 ? (
     <>
       <Box sx={{ mb: 2 }}>
-        <Typography variant="h4" sx={{ mb: 2 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
           {title}
         </Typography>
         <Grid container spacing={2}>

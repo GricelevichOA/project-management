@@ -24,8 +24,7 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { TasksBlock } from "../common/TasksBlock";
-import { filterTasksByStatus } from "../../utils/misc";
+import { TasksArea } from "../common/TasksArea";
 
 export function Project() {
   const params = useParams();
@@ -41,7 +40,9 @@ export function Project() {
   // NEW TASK FIELDS
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [assignee, setAssignee] = useState<string | number>("");
+  const [assignee, setAssignee] = useState<string | number | undefined>(
+    undefined
+  );
   const [dueDate, setDueDate] = useState<number>(Date.now());
 
   function handleOpenTaskForm() {
@@ -74,7 +75,7 @@ export function Project() {
       status: TaskStatus.created,
       title,
       description,
-      assignee,
+      assignee: assignee || users.currentUser.id,
       due_date: dueDate,
       project_id: projects.currentProject?.projectData?.id,
       date_started: Date.now(),
@@ -83,7 +84,7 @@ export function Project() {
     await createTask(newTask);
     await setCurrentProjectAction(dispatch, projectId || "");
     setIsCreatingTask(false);
-    setAssignee("");
+    setAssignee(undefined);
     setTitle("");
     setDescription("");
     setDueDate(Date.now());
@@ -160,67 +161,7 @@ export function Project() {
                 <Button variant="contained">Edit project</Button>
               </Link>
             </Box>
-            <Box>
-              {projects?.currentProject?.projectTasks !== null ? (
-                <TasksBlock
-                  tasks={filterTasksByStatus(
-                    TaskStatus.overdue,
-                    projects?.currentProject?.projectTasks
-                  )}
-                  title="Overdue tasks"
-                />
-              ) : (
-                ""
-              )}
-
-              {projects?.currentProject?.projectTasks !== null ? (
-                <TasksBlock
-                  tasks={filterTasksByStatus(
-                    TaskStatus.created,
-                    projects?.currentProject?.projectTasks
-                  )}
-                  title="New tasks"
-                />
-              ) : (
-                ""
-              )}
-
-              {projects?.currentProject?.projectTasks !== null ? (
-                <TasksBlock
-                  tasks={filterTasksByStatus(
-                    TaskStatus.inProgress,
-                    projects?.currentProject?.projectTasks
-                  )}
-                  title="Tasks in progress"
-                />
-              ) : (
-                ""
-              )}
-
-              {projects?.currentProject?.projectTasks !== null ? (
-                <TasksBlock
-                  tasks={filterTasksByStatus(
-                    TaskStatus.finished,
-                    projects?.currentProject?.projectTasks
-                  )}
-                  title="Completed tasks"
-                />
-              ) : (
-                ""
-              )}
-
-              {projects?.currentProject?.projectTasks !== null ? (
-                <TasksBlock
-                  tasks={filterTasksByStatus(
-                    TaskStatus.cancelled,
-                    projects?.currentProject?.projectTasks
-                  )}
-                  title="Cancelled tasks"
-                />
-              ) : (
-                ""
-              )}
-            </Box>
+            <TasksArea tasks={projects?.currentProject?.projectTasks} />
           </Box>
           <Modal open={isCreatingTask} onClose={handleCloseTaskForm}>
             <Box

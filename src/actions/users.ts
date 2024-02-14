@@ -1,4 +1,8 @@
-import { getUserProfiles } from "../api/firestore";
+import {
+  getUserProfiles,
+  getUserProjects,
+  getUserTasks,
+} from "../api/firestore";
 import { actions } from "../store";
 
 // TODO: избавиться от any
@@ -17,10 +21,14 @@ export async function setUserProfilesAction(dispatch: any) {
   dispatch(actions.users.isLoadingEnd());
 }
 
-export async function createUserProfileAction(dispatch: any, id: string) {
-  // TODO: сделать создание профиля юзера при регистрации
-}
-
-export async function getUserProfileAction(dispatch: any, id: string) {
-  // TODO: сделать получение профиля при логине
+export async function setUserProjectsAction(dispatch: any, user: string) {
+  dispatch(actions.users.isLoadingStart());
+  const projects = await getUserProjects(user);
+  const tasks = await getUserTasks(user);
+  const result = {
+    projects,
+    tasks,
+  };
+  dispatch(actions.users.setUserProjects(result));
+  dispatch(actions.users.isLoadingEnd());
 }

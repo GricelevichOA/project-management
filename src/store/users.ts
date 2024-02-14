@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserProfile, UsersState } from "../utils/types";
+import { UsersState } from "../utils/types";
 
 const initialState = {
   currentUser: null,
+  currentUserProjects: null,
   allUsers: [],
   isLoading: false,
 } as UsersState;
@@ -19,6 +20,9 @@ export const usersSlice = createSlice({
     },
     setUsers: (state, action) => {
       state.allUsers = action.payload;
+    },
+    setUserProjects: (state, action) => {
+      state.currentUserProjects = action.payload;
     },
     isLoadingStart: (state) => {
       state.isLoading = true;

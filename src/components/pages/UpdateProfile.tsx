@@ -1,4 +1,11 @@
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -48,38 +55,79 @@ export function UpdateProfile() {
   }
 
   return (
-    <Box>
-      <TextField
-        label="New username"
-        variant="outlined"
-        value={username}
-        onChange={(e) => {
-          setUsername(e.target.value);
+    <Box
+      sx={{
+        flex: "1 1",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card
+        sx={{
+          maxWidth: 400,
+          justifySelf: "center",
+          alignSelf: "center",
+          height: "100%",
         }}
-      />
-      <TextField
-        label="New email"
-        variant="outlined"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-      <TextField
-        label="New avatar (url string)"
-        variant="outlined"
-        value={avatarUrl}
-        onChange={(e) => {
-          setAvatarUrl(e.target.value);
-        }}
-      />
-      <Button variant="contained" onClick={editProfileHandler}>
-        Save profile
-      </Button>
+      >
+        <CardContent>
+          <Typography sx={{ mb: 2 }} variant="h4">
+            Edit profile
+          </Typography>
+          <Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: "100%" }}
+                label="New username"
+                variant="outlined"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+              />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: "100%" }}
+                label="New email"
+                variant="outlined"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </Box>
 
-      <Button color="error" variant="contained" onClick={deleteProfileHandler}>
-        Delete profile
-      </Button>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: "100%" }}
+                label="New avatar (url string)"
+                variant="outlined"
+                value={avatarUrl}
+                onChange={(e) => {
+                  setAvatarUrl(e.target.value);
+                }}
+              />
+            </Box>
+
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button variant="contained" onClick={editProfileHandler}>
+                Save profile
+              </Button>
+
+              <Button
+                color="error"
+                variant="contained"
+                onClick={deleteProfileHandler}
+              >
+                Delete profile
+              </Button>
+            </Box>
+          </Box>
+        </CardContent>
+      </Card>
     </Box>
   );
 }

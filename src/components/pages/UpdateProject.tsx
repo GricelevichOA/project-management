@@ -1,25 +1,38 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ProjectForm } from "../common/ProjectForm";
-import { deleteProject } from "../../api/firestore";
+import { Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { getProject } from "../../api/firestore";
+import { ProjectType } from "../../utils/types";
 
 export function UpdateProject() {
   const params = useParams();
   const projectId = params.id;
 
-  const navigate = useNavigate();
+  const [project, setProject] = useState<ProjectType | null>(null);
 
-  function deleteProjectHandler() {
-    if (projectId) {
-      deleteProject(projectId);
-      navigate("/projects")
-    }
-  }
+  useEffect(() => {
+    const load = async () => {
+      const p = await getProject(projectId || "");
+      setProject(p);
+    };
+    load();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
-      <h2>Update project</h2>
-      <ProjectForm projectId={projectId} />
-      <button onClick={deleteProjectHandler}>Delete project</button>
+      <Typography variant="h2" sx={{ textAlign: "center" }}>
+        Update project
+      </Typography>
+      {project ? (
+        <ProjectForm
+          projectTitle={project?.title}
+          projectDescription={project?.description}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }

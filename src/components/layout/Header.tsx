@@ -83,7 +83,7 @@ export function Header() {
                 <Box sx={{ mr: 2 }}>
                   <Avatar
                     alt={users.currentUser?.username}
-                    src={users.currentUser?.avatar_url}
+                    src={users?.currentUser?.avatar_url}
                     sx={{ mr: "2" }}
                   />
                 </Box>

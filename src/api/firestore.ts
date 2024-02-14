@@ -59,17 +59,6 @@ export async function deleteUserProfile(uid: string) {
   }
 }
 
-// export async function deleteProject(id: string) {
-//   try {
-//     const docRef = doc(db, "projects", id);
-//     await deleteDoc(docRef);
-//     return true;
-//   } catch (e) {
-//     console.error("error while deleting project", (e as Error).message);
-//     return false;
-//   }
-// }
-
 export async function getUserProfiles() {
   try {
     const profilesRef = collection(db, "users");
@@ -208,6 +197,22 @@ export async function getProjectTasks(projectId: string) {
     return filteredData;
   } catch (e) {
     console.error("Error while fetching tasks: ", (e as Error).message);
+    return false;
+  }
+}
+
+export async function getUserTasks(userId: string) {
+  try {
+    const tasksRef = collection(db, "tasks");
+    const q = query(tasksRef, where("assignee", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const filteredData = querySnapshot.docs.map((doc: any) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return filteredData;
+  } catch (e) {
+    console.error(e);
     return false;
   }
 }

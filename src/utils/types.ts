@@ -70,6 +70,12 @@ export type UsersState = {
   currentUser: UserProfile | null;
   allUsers: UserProfile[];
   isLoading: boolean;
+  currentUserProjects: CurrentUserProjects | null;
+};
+
+type CurrentUserProjects = {
+  projects: ProjectType[];
+  tasks: Task[];
 };
 
 export type ProjectCardProps = {
@@ -78,5 +84,9 @@ export type ProjectCardProps = {
 
 export type TaskBlockProps = {
   title: string;
+  tasks: Task[];
+};
+
+export type TasksAreaProps = {
   tasks: Task[];
 };

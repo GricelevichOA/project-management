@@ -1,43 +1,65 @@
-import { useSelector } from "react-redux";
-import {
-  UserProfile,
-  ProjectType,
-  UsersState,
-} from "../../utils/types";
-import { Box, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Divider, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { ProjectCard } from "../common/ProjectCard";
+import { setUserProjectsAction } from "../../actions";
+import { TasksArea } from "../common/TasksArea";
 
 export function Profile() {
-  const [userProjects, setUserProjects] = useState<any>(null);
-
-  // TODO: get rid of any
-  const user = useSelector((state: any) => state.users);
-  const currentUser: UserProfile = user.currentUser;
-  const projects = useSelector((state: any) => state.projects);
+  const users = useSelector((state: any) => state.users);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const filteredUserProjects = projects.items.filter(
-      (project: ProjectType) => project?.user_id === currentUser?.id
-    );
-    setUserProjects(filteredUserProjects);
+    const load = async () => {
+      await setUserProjectsAction(dispatch, users?.currentUser?.id);
+    };
+    load();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <Box>
-      <Box sx={{ border: "1px solid black" }}>
-        <img src={currentUser?.avatar_url} alt={currentUser?.username} />
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+        <Box>
+          <img
+            src={users?.currentUser?.avatar_url}
+            alt={users?.currentUser?.username}
+          />
+        </Box>
+        <Box sx={{}}>
+          <Typography>{users?.currentUser?.username}</Typography>
+          <Typography>
+            <a href={`mailto:${users?.currentUser?.email}`}>
+              {users?.currentUser?.email}
+            </a>
+          </Typography>
+        </Box>
       </Box>
-      <Box sx={{ border: "1px solid black" }}>
-        <Typography>{currentUser?.username}</Typography>
-        <Typography>{currentUser?.email}</Typography>
-      </Box>
-      <Box sx={{ border: "1px solid black" }}>
-        <Grid container spacing={2} sx={{ border: "1px solid black" }}>
-          {userProjects?.map((project: any) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </Grid>
+
+      <Divider />
+
+      <Box>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h4" sx={{ mb: 2 }}>
+            My projects
+          </Typography>
+          <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
+            {users.currentUserProjects?.projects?.map((project: any) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </Grid>
+        </Box>
+
+        <Divider />
+
+        <Box>
+          <Typography variant="h4">My assigned tasks</Typography>
+          {users?.currentUserProjects?.tasks ? (
+            <TasksArea tasks={users?.currentUserProjects?.tasks} />
+          ) : (
+            ""
+          )}
+        </Box>
       </Box>
     </Box>
   );

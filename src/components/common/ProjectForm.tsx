@@ -1,28 +1,38 @@
-import { useState, ReactElement } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { createProject } from "../../api/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Button } from "@mui/material";
+import { Box, Button, Card, CardContent, TextField } from "@mui/material";
+import { deleteProject } from "../../api/firestore";
+import { setUserProjectsAction } from "../../actions";
 
 type FormProps = {
-  title?: string;
-  description?: string;
   projectId?: string;
+  projectTitle?: string;
+  projectDescription?: string;
 };
 
 export function ProjectForm({
-  title = "",
-  description = "",
-  projectId = "",
-}): ReactElement<FormProps> {
-  const [formTitle, setTitle] = useState("");
-  const [formDescription, setDescription] = useState("");
-
-  const params = useParams();
+  projectId,
+  projectTitle,
+  projectDescription,
+}: FormProps) {
+  const [formTitle, setTitle] = useState(projectTitle);
+  const [formDescription, setDescription] = useState(projectDescription);
 
   const users = useSelector((state: any) => state.users);
   const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  async function deleteProjectHandler() {
+    if (projectId) {
+      deleteProject(projectId);
+      await setUserProjectsAction(dispatch, users?.currentUser?.id);
+      navigate("/profile");
+    }
+  }
 
   async function createProjectHandler() {
     const newProject = {
@@ -40,28 +50,69 @@ export function ProjectForm({
   }
 
   return (
-    <div className="project-form">
-      <div className="project-form__input">
-        <input
-          type="text"
-          placeholder="Project title"
-          value={formTitle}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div className="project-form__input">
-        <label htmlFor="description">Project description: </label>
-        <br />
-        <textarea
-          value={formDescription}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
+    <Box
+      sx={{
+        display: "flex",
+        flex: "1 1",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card
+        sx={{
+          minHeight: 400,
+          minWidth: 300,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            flex: "1 1",
+          }}
+        >
+          <Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: "100%" }}
+                label="Project title"
+                value={formTitle}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                multiline
+                label="Project description"
+                sx={{ width: "100%" }}
+                minRows={7}
+                value={formDescription}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Box>
+          </Box>
 
-      <br />
-      <Button onClick={createProjectHandler} variant="contained">
-        Submit
-      </Button>
-    </div>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Button onClick={createProjectHandler} variant="contained">
+              Submit
+            </Button>
+            {params.id ? (
+              <Button
+                variant="contained"
+                color="error"
+                onClick={deleteProjectHandler}
+              >
+                Delete
+              </Button>
+            ) : (
+              ""
+            )}
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }
