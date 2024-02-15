@@ -13,7 +13,7 @@ import {
 import { TaskCardProps, UserProfile } from "../../utils/types";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatusColor } from "../../utils/misc";
+import { formatDate, setStatusColor } from "../../utils/misc";
 import { TaskStatus } from "../../utils/enums";
 import { setTask } from "../../api/firestore";
 import { useLocation } from "react-router-dom";
@@ -126,8 +126,11 @@ export function TaskCard({ task }: TaskCardProps) {
             <Typography variant="caption" sx={{ mr: 1, display: "flex" }}>
               {assignee?.username}
             </Typography>
-
-            <Typography variant="body1" color=""></Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="">
+              Created: {formatDate(task.date_started)}
+            </Typography>
           </Box>
         </CardContent>
         <CardActions>
