@@ -25,10 +25,6 @@ export function TaskCard({ task }: TaskCardProps) {
   const users = useSelector((state: any) => state.users);
   const projects = useSelector((state: any) => state.projects);
 
-  const projectOwnerId = useSelector(
-    (state: any) => state.projects?.currentProject?.projectOwner?.id
-  );
-
   const location = useLocation();
   const dispatch = useDispatch();
 

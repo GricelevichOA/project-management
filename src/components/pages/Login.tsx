@@ -17,7 +17,6 @@ export function Login() {
   const [password, setPassword] = useState("");
 
   async function signIn(): Promise<void> {
-    // TODO: implement login logic
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setEmail("");

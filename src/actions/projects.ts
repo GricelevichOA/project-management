@@ -1,5 +1,3 @@
-// TODO: избавиться от any
-
 import {
   getProject,
   getProjectTasks,

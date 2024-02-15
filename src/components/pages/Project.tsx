@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Task, UserProfile } from "../../utils/types";
 import { useEffect, useState } from "react";
 import { setCurrentProjectAction } from "../../actions";
@@ -28,7 +28,6 @@ export function Project() {
   const params = useParams();
   const projectId = params.id;
 
-  // TODO: get rid of any
   const projects = useSelector((state: any) => state.projects);
   const users = useSelector((state: any) => state.users);
   const dispatch = useDispatch();

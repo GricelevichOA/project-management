@@ -47,7 +47,6 @@ export async function getUserProfile(uid: string) {
   }
 }
 
-// TODO:
 export async function deleteUserProfile(uid: string) {
   try {
     const userRef = doc(db, "users", uid);
@@ -76,7 +75,6 @@ export async function getUserProfiles() {
 }
 
 // PROJECTS
-// TODO: отформатировать
 export async function getProjects(): Promise<boolean | Array<ProjectType>> {
   try {
     const projectsRef = collection(db, "projects");
@@ -120,7 +118,6 @@ export async function getUserProjects(userId: string): Promise<any> {
   }
 }
 
-// TODO: избавиться от any и отформатировать
 export async function getProject(
   id: string
 ): Promise<ProjectType | boolean | any> {
@@ -228,11 +225,3 @@ export async function setTask(task: Task) {
     return false;
   }
 }
-
-// TODO:
-export async function updateTask(task: Task) {}
-
-// TODO:
-export async function updateTaskStatus(task: Task, newStatus: string) {}
-
-export async function deleteTask(taskId: string) {}

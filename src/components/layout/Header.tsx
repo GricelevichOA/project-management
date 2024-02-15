@@ -16,7 +16,6 @@ import {
 import { useState } from "react";
 
 export function Header() {
-  // TODO: избавиться от any
   const users = useSelector((store: any) => store.users);
   const dispatch = useDispatch();
 

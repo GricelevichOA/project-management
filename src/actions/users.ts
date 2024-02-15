@@ -5,7 +5,6 @@ import {
 } from "../api/firestore";
 import { actions } from "../store";
 
-// TODO: избавиться от any
 export function setCurrentUserAction(dispatch: any, user: any): void {
   dispatch(actions.users.setCurrentUser(user));
 }

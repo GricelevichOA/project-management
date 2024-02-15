@@ -82,7 +82,6 @@ function App() {
               path="/login"
               element={!currentUser ? <Login /> : <Navigate to="/" />}
             />
-            <Route path="/projects" element={checkAuth(<Projects />)} />
             <Route path="/projects/:id" element={checkAuth(<Project />)} />
             <Route
               path="/projects/new"

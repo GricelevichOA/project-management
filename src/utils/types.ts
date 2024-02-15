@@ -1,4 +1,3 @@
-// TODO: избавиться от any
 export type ProjectType = {
   id: string;
   title: string;
@@ -46,8 +45,8 @@ export type NewProject = {
   description: string;
   user_id: string;
   status: string;
-  created_at: any;
-  updated_at: any;
+  created_at: number;
+  updated_at: number;
 };
 
 export type Props = {

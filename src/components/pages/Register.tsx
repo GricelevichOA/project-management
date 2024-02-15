@@ -15,14 +15,12 @@ import {
   Typography,
 } from "@mui/material";
 import { UserProfile } from "../../utils/types";
-import LockIcon from "@mui/icons-material/Lock";
 
 export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  // TODO: избавиться от any
   const dispatch = useDispatch();
 
   async function signUp(): Promise<void> {
@@ -33,7 +31,6 @@ export function Register() {
         password
       );
       setCurrentUserAction(dispatch, auth?.currentUser);
-      // TODO: СДЕЛАТЬ ДЕФОЛТНУЮ КАРТИНКУ ДЛЯ АВАТАРА
       const newUserProfile = {
         id: userCredentials.user.uid,
         username: username,
