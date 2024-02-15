@@ -60,7 +60,7 @@ export function Login() {
                 label="Password"
                 id="register_email"
                 className="register__input input"
-                type="email"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
