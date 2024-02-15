@@ -27,8 +27,10 @@ export function UpdateProject() {
       </Typography>
       {project ? (
         <ProjectForm
+          projectId={project?.id}
           projectTitle={project?.title}
           projectDescription={project?.description}
+          createdAt={project?.created_at}
         />
       ) : (
         ""

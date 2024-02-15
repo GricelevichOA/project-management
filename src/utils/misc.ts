@@ -9,8 +9,6 @@ export function setStatusColor(status: string) {
       return "wheat";
     case TaskStatus.finished:
       return "success.main";
-    case TaskStatus.overdue:
-      return "error.main";
     case TaskStatus.cancelled:
       return "rgba(0, 0, 0, 0.08)";
     default:

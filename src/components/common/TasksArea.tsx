@@ -9,15 +9,6 @@ export function TasksArea({ tasks }: TasksAreaProps) {
     <Box>
       {tasks !== null ? (
         <TasksBlock
-          tasks={filterTasksByStatus(TaskStatus.overdue, tasks)}
-          title="Overdue tasks"
-        />
-      ) : (
-        ""
-      )}
-
-      {tasks !== null ? (
-        <TasksBlock
           tasks={filterTasksByStatus(TaskStatus.created, tasks)}
           title="New tasks"
         />

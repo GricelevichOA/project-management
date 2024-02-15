@@ -15,7 +15,6 @@ export type Task = {
   description: string;
   project_id: string;
   date_started: number;
-  due_date: number;
   assignee: string;
   status: string;
 };

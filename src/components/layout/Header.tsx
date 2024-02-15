@@ -124,6 +124,7 @@ export function Header() {
           ) : (
             <>
               <Link
+                sx={{ mr: 2 }}
                 component={RouterLink}
                 to={"/register"}
                 color={"inherit"}

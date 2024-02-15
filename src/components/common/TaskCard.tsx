@@ -50,9 +50,6 @@ export function TaskCard({ task }: TaskCardProps) {
           <Typography>
             Created: {new Date(task.date_started).toString()}
           </Typography>
-          <Typography>
-            Due date: {new Date(task.due_date).toString()}
-          </Typography>
 
           <Box
             sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}

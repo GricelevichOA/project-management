@@ -8,5 +8,4 @@ export enum TaskStatus {
   inProgress = "in progress",
   finished = "finished",
   cancelled = "cancelled",
-  overdue = "overdue",
 }

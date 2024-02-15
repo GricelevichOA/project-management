@@ -11,12 +11,14 @@ type FormProps = {
   projectId?: string;
   projectTitle?: string;
   projectDescription?: string;
+  createdAt?: number;
 };
 
 export function ProjectForm({
   projectId,
   projectTitle,
   projectDescription,
+  createdAt,
 }: FormProps) {
   const [formTitle, setTitle] = useState(projectTitle);
   const [formDescription, setDescription] = useState(projectDescription);
@@ -41,8 +43,8 @@ export function ProjectForm({
       description: formDescription,
       user_id: users.currentUser.id,
       status: "new",
-      created_at: Date.now(),
-      updated_at: "",
+      created_at: projectId ? createdAt : Date.now(),
+      updated_at: projectId ? Date.now() : "",
     };
 
     await createProject(newProject);

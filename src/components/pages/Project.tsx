@@ -20,11 +20,11 @@ import {
 import { v4 as uuid4 } from "uuid";
 import { TaskStatus } from "../../utils/enums";
 import { createTask } from "../../api/firestore";
-import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { TasksArea } from "../common/TasksArea";
+import { formatDate } from "../../utils/misc";
 
 export function Project() {
   const params = useParams();
@@ -43,7 +43,6 @@ export function Project() {
   const [assignee, setAssignee] = useState<string | number | undefined>(
     undefined
   );
-  const [dueDate, setDueDate] = useState<number>(Date.now());
 
   function handleOpenTaskForm() {
     setIsCreatingTask(true);
@@ -65,10 +64,6 @@ export function Project() {
     setTitle(event.target.value);
   }
 
-  function handleDueDateChange(event: any) {
-    setDueDate(Date.parse(event.$d));
-  }
-
   async function handleCreateTask() {
     const newTask = {
       id: uuid4(),
@@ -76,7 +71,6 @@ export function Project() {
       title,
       description,
       assignee: assignee || users.currentUser.id,
-      due_date: dueDate,
       project_id: projects.currentProject?.projectData?.id,
       date_started: Date.now(),
     } as Task;
@@ -87,7 +81,6 @@ export function Project() {
     setAssignee(undefined);
     setTitle("");
     setDescription("");
-    setDueDate(Date.now());
   }
 
   useEffect(() => {
@@ -121,21 +114,17 @@ export function Project() {
 
             <Box sx={{ mb: 2 }}>
               <Typography component={"span"} sx={{ mr: 1 }}>
-                Created at:{" "}
+                Created:{" "}
               </Typography>
-              {new Date(
-                projects?.currentProject?.projectData?.created_at
-              ).toString()}
+              {formatDate(projects?.currentProject?.projectData?.created_at)}
             </Box>
             <Box sx={{ mb: 2 }}>
               <Typography component={"span"} sx={{ mr: 1 }}>
-                Updated at:
+                Updated:
               </Typography>
               {projects?.currentProject?.projectData?.updated_at
-                ? new Date(
-                    projects?.currentProject?.projectData?.updated_at
-                  ).toString()
-                : "No updates at this time"}
+                ? formatDate(projects?.currentProject?.projectData?.updated_at)
+                : "No updates yet"}
             </Box>
             <Box sx={{ mb: 2 }}>
               <Typography variant="body1">
@@ -202,7 +191,7 @@ export function Project() {
                   <InputLabel>Assignee</InputLabel>
                   <Box sx={{ mb: 2 }}>
                     <Select
-                      sx={{ width: "100%" }}
+                      sx={{ width: "100%", display: "flex" }}
                       label="Assignee"
                       value={assignee}
                       onChange={handleAssigneeChange}
@@ -218,21 +207,6 @@ export function Project() {
                     </Select>
                   </Box>
                 </FormControl>
-
-                <Box sx={{ mb: 2 }}>
-                  <LocalizationProvider
-                    dateAdapter={AdapterDayjs}
-                    adapterLocale="ru"
-                  >
-                    <DateTimePicker
-                      value={dayjs(dueDate)}
-                      sx={{ width: "100%" }}
-                      label="Due date"
-                      ampm={false}
-                      onChange={handleDueDateChange}
-                    />
-                  </LocalizationProvider>
-                </Box>
 
                 <Box>
                   <Button variant="contained" onClick={handleCreateTask}>

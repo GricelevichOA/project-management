@@ -31,16 +31,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </Box>
           <Divider />
           <Box>
-            <Typography variant="caption">
-              Created: {formatDate(project?.created_at)}
-            </Typography>
-            {project?.updated_at ? (
+            <Box>
+              {" "}
               <Typography variant="caption">
-                Updated: {formatDate(project?.updated_at)}
+                Created: {formatDate(project?.created_at)}
               </Typography>
-            ) : (
-              ""
-            )}
+            </Box>
+            <Box>
+              {project?.updated_at ? (
+                <Typography variant="caption">
+                  Updated: {formatDate(project?.updated_at)}
+                </Typography>
+              ) : (
+                ""
+              )}
+            </Box>
           </Box>
         </CardContent>
       </Card>
