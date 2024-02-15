@@ -5,7 +5,7 @@ export type ProjectType = {
   user_id: string;
   status: string;
   created_at: number;
-  updated_at: number;
+  updated_at: number | null;
 };
 
 export type Task = {

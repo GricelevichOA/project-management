@@ -46,16 +46,6 @@ export function Header() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Link
               component={RouterLink}
-              to={"/projects"}
-              color={"inherit"}
-              underline="none"
-            >
-              <Button sx={{ my: 2, color: "white", display: "block" }}>
-                Projects
-              </Button>
-            </Link>
-            <Link
-              component={RouterLink}
               to={"/profile"}
               color={"inherit"}
               underline="none"
