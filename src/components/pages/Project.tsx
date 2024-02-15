@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Task, UserProfile } from "../../utils/types";
 import { useEffect, useState } from "react";
 import { setCurrentProjectAction } from "../../actions";
@@ -19,9 +19,7 @@ import {
 } from "@mui/material";
 import { v4 as uuid4 } from "uuid";
 import { TaskStatus } from "../../utils/enums";
-import { createTask } from "../../api/firestore";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { setTask } from "../../api/firestore";
 import "dayjs/locale/ru";
 import { TasksArea } from "../common/TasksArea";
 import { formatDate } from "../../utils/misc";
@@ -75,7 +73,7 @@ export function Project() {
       date_started: Date.now(),
     } as Task;
 
-    await createTask(newTask);
+    await setTask(newTask);
     await setCurrentProjectAction(dispatch, projectId || "");
     setIsCreatingTask(false);
     setAssignee(undefined);
@@ -88,6 +86,7 @@ export function Project() {
       await setCurrentProjectAction(dispatch, projectId || "");
     };
     load();
+
     // eslint-disable-next-line
   }, []);
 

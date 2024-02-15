@@ -217,26 +217,7 @@ export async function getUserTasks(userId: string) {
   }
 }
 
-export async function getTaskAssignee(taskId: string) {
-  try {
-    const userRef = doc(db, "users", taskId);
-    const querySnapshot = await getDoc(userRef);
-
-    if (querySnapshot.exists()) {
-      const userData = {
-        id: querySnapshot.id,
-        ...querySnapshot.data(),
-      };
-
-      return userData;
-    }
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-}
-
-export async function createTask(task: Task) {
+export async function setTask(task: Task) {
   try {
     const taskRef = doc(db, "tasks", task.id);
     await setDoc(taskRef, task);
