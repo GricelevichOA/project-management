@@ -21,7 +21,6 @@ import {
   setUserProfilesAction,
 } from "../actions";
 import { getUserProfile } from "../api/firestore";
-import { Projects } from "./pages/Projects";
 import { Project } from "./pages/Project";
 import { Profile } from "./pages/Profile";
 import { CreateProject } from "./pages/CreateProject";
